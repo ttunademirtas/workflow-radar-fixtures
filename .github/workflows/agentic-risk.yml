@@ -1,0 +1,20 @@
+name: Agentic Risk Fixture
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Review external comment with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          prompt: ${{ github.event.comment.body }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
